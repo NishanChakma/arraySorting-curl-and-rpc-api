@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>CURL</title>
+  </head>
+  <script>
+    const apiCall = async () => {
+      const params = JSON.stringify({
+        periodBegin: "1576671084",
+        periodEnd: "1576679084",
+        symbol: "EURUSD"
+      });
+      const options = {
+        method: "POST",
+        body: params,
+        headers: {
+          "Content-Type": "application/json"
+        }
+      };
+      let apicall = await fetch(
+        "https://api-option.ifxdb.com/api/quotes/ticks",
+        options
+      );
+      let returnData = await apicall.json();
+      return returnData.responseData;
+    };
+    apiCall().then(res => console.log(res));
+  </script>
+  <body></body>
+</html>

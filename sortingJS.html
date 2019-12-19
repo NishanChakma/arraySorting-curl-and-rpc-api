@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>RESULT SHEET</h2>
+    <p id="demo"></p>
+    <script>
+        fetch("https://api.mt5.com/get-signals?_format=json&access_token=uf8s7h4684s7er98w78h986q&trading_system=3,4&limit=100")
+            .then(res => res.json())
+            .then(res => {
+                var data = res.result;
+                var storkey = [];
+                var test_Array = [];
+                var content = '';
+                Object.keys(data).forEach(function (item) {
+                    if (storkey[data[item].pair] === undefined) {
+                        storkey[data[item].pair] = 1;
+                    } else {
+                        storkey[data[item].pair] += 1;
+                    }
+                });
+                Object.keys(storkey).forEach(function (item) {
+                    var a = new Array();
+                    a["key"] = item;
+                    a["value"] = storkey[item];
+                    test_Array.push(a);
+                });
+                console.log(test_Array)
+                test_Array.sort((a, b) => (a.value < b.value) ? 1 : ((b.value < a.value) ? -1 : 0));
+                test_Array.forEach(function (value) {
+                    var html = "<tr>";
+                    html += "<td>" + value.key + ' has printed ' + value.value + ' times' + "</td>" + "</br>";
+                    html += "</tr>";
+                    content += html;
+                    document.getElementById("demo").innerHTML = content;
+                });
+            })
+    </script>
+</body>
+</html>

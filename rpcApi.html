@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>RPC Api</title>
+  </head>
+  <script>
+    const documentReady = () => {
+      const params = {
+        symbol: "EURUSD",
+        period: "m15",
+        type: 4,
+        start: 1533859200,
+        end: 1536537600
+      };
+      requestToApi("getOhlcv2", params);
+    };
+    requestToApi = (method, params) => {
+      const API_URL = "https://api-webtrader.ifxdb.com/";
+      const args = {
+        method,
+        params
+      };
+
+      fetch(API_URL, {
+        method: "POST",
+        body: `rpc=${JSON.stringify(args)}`
+      })
+        .then(res => res.json())
+        .then(res => {
+          console.log(res.result);
+        });
+    };
+
+    documentReady();
+  </script>
+  <body>
+    <h1>Please open console</h1>
+  </body>
+</html>
